@@ -12,10 +12,6 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.get('/home',(req,res)=>{
-    res.send("hello world");
-});
-
 app.use('/category',categoryRouter);
 
 const PORT = process.env.PORT;
