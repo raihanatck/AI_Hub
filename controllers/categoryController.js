@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const categoryModel = require('../models/category')
 
 const CreateCategory = async (req, res) => {
-    const { Name, Descsription } = req.body;
+    const { name, descsription } = req.body;
     try {
         const newCategory = await categoryModel({
-            Name,
-            Descsription
+            name,
+            descsription
         });
         const saveCategory = await newCategory.save();
         return res.status(200).json({ Category: saveCategory, Message: "Category created successfully," });
@@ -19,11 +19,11 @@ const CreateCategory = async (req, res) => {
 
 const EditCategory = async (req, res) => {
     const id = req.params.categoryid;
-    const { Name, Descsription } = req.body;
+    const { name, descsription } = req.body;
     try {
         const editCategory = {
-            Name,
-            Descsription
+            name,
+            descsription
         };
         await categoryModel.findByIdandUpdate(id, editCategory, { new: true });
         return res.statu(200).json({ editCategory, Message: "Cateory update successfully." });
