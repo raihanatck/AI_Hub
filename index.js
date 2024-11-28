@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require("cors");
 const mongoose = require('mongoose');
-const categoryRouter = require('./routers/categoryRouter');
+const categoryRouter = require('./routes/categoryRouter');
 const app = express();
 app.use(cors());
 require('dotenv').config();
@@ -10,6 +10,10 @@ app.use(express.json());
 app.use((req,res,next)=>{
     console.log("HTTP method - " + req.method + " , URL - " + req.url);
     next();
+});
+
+app.get('/home',(req,res)=>{
+    res.send("hello world");
 });
 
 app.use('/category',categoryRouter);
@@ -21,7 +25,7 @@ mongoose.connect(
 ).then(()=>{
     
     console.log("MongoDB is connected");
-    app.listen(PORT, () => {
+    app.listen(27010, () => {
         console.log("Server started on this port 5000");
     });
 
