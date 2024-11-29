@@ -12,6 +12,10 @@ app.use((req,res,next)=>{
     next();
 });
 
+// app.get('/home',(req,res)=>{
+//     res.send("Welcome");
+// })
+
 app.use('/category',categoryRouter);
 
 const PORT = process.env.PORT;
@@ -21,8 +25,8 @@ mongoose.connect(
 ).then(()=>{
     
     console.log("MongoDB is connected");
-    app.listen(27010, () => {
-        console.log("Server started on this port 5000");
+    app.listen(PORT, () => {
+        console.log("Server started on this port 5050");
     });
 
 }).catch((error)=>{
