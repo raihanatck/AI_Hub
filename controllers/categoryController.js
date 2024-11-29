@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
-const categoryModel = require('../models/category')
+const categoryModel = require('../models/category');
+const aimodel = require('../models/ai');
 
 const CreateCategory = async (req, res) => {
     const { name, description } = req.body;
     try {
         const existingcategory = await categoryModel.findOne({ name: name });
         if (existingcategory) {
-            return res.status(404).json({ Message: "Category is already exist." });
+            return res.status(400).json({ Message: "Category is already exist." });
         }
         if(!name){
-            return res.status(404).json({Message: "Category name is required"});
+            return res.status(400).json({Message: "Category name is required"});
         }
         if(!description){
-            return res.status(404).json({Message: "Category description is required"});
+            return res.status(400).json({Message: "Category description is required"});
         }
         const newCategory = await categoryModel({
             name,
@@ -26,16 +27,19 @@ const CreateCategory = async (req, res) => {
     }
 };
 
-
 const EditCategory = async (req, res) => {
     const id = req.params.categoryid;
     const { name, description } = req.body;
     try {
+        const existingcategory = await categoryModel.findOne({ name: name });
+        if (existingcategory) {
+            return res.status(400).json({ Message: "Category is already exist." });
+        }
         if(!name){
-            return res.status(404).json({Message: "Category name is required"});
+            return res.status(400).json({Message: "Category name is required"});
         }
         if(!description){
-            return res.status(404).json({Message: "Category description is required"});
+            return res.status(400).json({Message: "Category description is required"});
         }
         const editCategory = {
             name,
@@ -54,10 +58,34 @@ const DeleteCategory = async (req, res) => {
     const id = req.params.categoryid;
     try {
         const delcategory = await categoryModel.findByIdAndDelete(id);
-        res.status(200).json({ delcategory, Message: "Category deleted successfully." });
+        return res.status(200).json({ delcategory, Message: "Category deleted successfully." });
     } catch (error) {
         console.log("Delete category error: ", error);
         return res.status(500).json({ Message: "Internal server error." });
     }
 };
-module.exports = { CreateCategory, EditCategory, DeleteCategory };
+
+const GetCategory = async (req,res) => {
+    try {
+        const category = await categoryModel.find({}, 'id name description');
+        const categoriesWithModelCount = await Promise.all(category.map(async (category) => {
+            // Find models associated with the current category
+            // console.log("catID",category._id);
+            
+            const modelCount = await aimodel.countDocuments({ categoryID: category._id });
+            const AIs = await aimodel.find({ categoryID: category._id })
+            
+      
+            return {
+              category: category,   // Category name
+              AImodelCount: modelCount,
+              models: AIs    // Count of models in this category
+            };
+        }));
+        return res.status(200).json({categoriesWithModelCount});
+    } catch (error) {
+        console.log("Delete category error: ", error);
+        return res.status(500).json({ Message: "Internal server error." });
+    }
+}
+module.exports = { CreateCategory, EditCategory, DeleteCategory, GetCategory };

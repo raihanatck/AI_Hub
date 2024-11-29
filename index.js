@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require("cors");
 const mongoose = require('mongoose');
 const categoryRouter = require('./routes/categoryRouter');
+const aiRouter = require('./routes/aiRouter');
 const app = express();
 app.use(cors());
 require('dotenv').config();
@@ -17,6 +18,7 @@ app.use((req,res,next)=>{
 // })
 
 app.use('/category',categoryRouter);
+app.use('/aitools',aiRouter);
 
 const PORT = process.env.PORT;
 mongoose.connect(
