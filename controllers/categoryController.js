@@ -85,6 +85,7 @@ const GetCategory = async (req, res) => {
                 tools: AIs,
                 models: Models,
                 datasets: DataSets,
+                id: category.id,
                 name: category.name,
                 description: category.description,                
             };
