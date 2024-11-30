@@ -9,11 +9,11 @@ const CreateCategory = async (req, res) => {
         if (existingcategory) {
             return res.status(400).json({ Message: "Category is already exist." });
         }
-        if(!name){
-            return res.status(400).json({Message: "Category name is required"});
+        if (!name) {
+            return res.status(400).json({ Message: "Category name is required" });
         }
-        if(!description){
-            return res.status(400).json({Message: "Category description is required"});
+        if (!description) {
+            return res.status(400).json({ Message: "Category description is required" });
         }
         const newCategory = await categoryModel({
             name,
@@ -35,11 +35,11 @@ const EditCategory = async (req, res) => {
         if (existingcategory) {
             return res.status(400).json({ Message: "Category is already exist." });
         }
-        if(!name){
-            return res.status(400).json({Message: "Category name is required"});
+        if (!name) {
+            return res.status(400).json({ Message: "Category name is required" });
         }
-        if(!description){
-            return res.status(400).json({Message: "Category description is required"});
+        if (!description) {
+            return res.status(400).json({ Message: "Category description is required" });
         }
         const editCategory = {
             name,
@@ -65,24 +65,22 @@ const DeleteCategory = async (req, res) => {
     }
 };
 
-const GetCategory = async (req,res) => {
+const GetCategory = async (req, res) => {
     try {
         const category = await categoryModel.find({}, 'id name description');
-        const categoriesWithModelCount = await Promise.all(category.map(async (category) => {
-            // Find models associated with the current category
-            // console.log("catID",category._id);
-            
-            const modelCount = await aimodel.countDocuments({ categoryID: category._id });
+        const categories = await Promise.all(category.map(async (category) => {
+
+            const toolsCount = await aimodel.countDocuments({ categoryID: category._id });
             const AIs = await aimodel.find({ categoryID: category._id })
-            
-      
+
             return {
-              category: category,   // Category name
-              AImodelCount: modelCount,
-              models: AIs    // Count of models in this category
+                total_tools: toolsCount,
+                tools: AIs,
+                name: category.name,
+                description: category.description,                
             };
         }));
-        return res.status(200).json({categoriesWithModelCount});
+        return res.status(200).json({ categories });
     } catch (error) {
         console.log("Delete category error: ", error);
         return res.status(500).json({ Message: "Internal server error." });

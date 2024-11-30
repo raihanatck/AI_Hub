@@ -3,19 +3,19 @@ const aischema = require('../models/ai');
 const category = require('../models/category');
 
 const CreateAI = async (req, res) => {
-    const { ainame, aidescription, aitags, ailink, categoryID } = req.body;
-    const aiimage = req.file ? req.file.path : null;
+    const { name, description, tags, link, categoryID } = req.body;
+    const image = req.file ? req.file.path : null;
     try {
-        const existingAI = await aischema.findOne({ ainame: ainame });
+        const existingAI = await aischema.findOne({ name: name });
         if (existingAI) {
             return res.status(400).json({ Message: "Ai aleardy exist." });
         }
         const newAI = await aischema({
-            aiimage,
-            ainame,
-            aidescription,
-            aitags,
-            ailink,
+            image,
+            name,
+            description,
+            tags,
+            link,
             categoryID
         });
         const saveAI = await newAI.save();
@@ -28,22 +28,23 @@ const CreateAI = async (req, res) => {
 
 const EditAI = async (req, res) => {
     const id = req.params.aiid;
-    const { ainame, aidescription, aitags, ailink, categoryID } = req.body;
-    const aiimage = req.file ? req.file.path : null;
+    const { name, description, tags, link, categoryID } = req.body;
+    const image = req.file ? req.file.path : null;
     try {
-        const existingAI = await aischema.findOne({ ainame, _id: { $ne: id } });
+        const existingAI = await aischema.findOne({ name, _id: { $ne: id } });
         if (existingAI) {
             return res.status(400).json({ Message: "This AI name aleardy exist." });
         }
         const editAI = await aischema({
-            ainame,
-            aidescription,
-            aitags,
-            ailink,
+            image,
+            name,
+            description,
+            tags,
+            link,
             categoryID
         });
         if (aiimage) {
-            updateData.aiimage = aiimage; // Only update image if provided
+            updateData.aiimage = image; // Only update image if provided
         }
         await aischema.findByIdAndUpdate(id, editAI, { new: true });
         return res.status(200).json({ UpdatedAI: editAI, Message: "Category updated successfully." });
