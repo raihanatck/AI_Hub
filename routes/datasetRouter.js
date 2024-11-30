@@ -4,8 +4,8 @@ const { upload } = require('../middlewares/uploadimage');
 
 const datasetRouter = express.Router();
 
-datasetRouter.post('/', upload.single('datasetimage'), createDataset);
-datasetRouter.put('/:datasetid', upload.single('datasetimage'), editDataset);
+datasetRouter.post('/', upload.single('image'), createDataset);
+datasetRouter.put('/:datasetid', upload.single('image'), editDataset);
 datasetRouter.put('/:datasetid', DeleteDataset);
 datasetRouter.get('/', GetDataset);
 

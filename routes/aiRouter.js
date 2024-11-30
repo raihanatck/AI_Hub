@@ -3,8 +3,8 @@ const { CreateAI, EditAI, DeleteAI, GetAI } = require('../controllers/aiControll
 const { upload } = require('../middlewares/uploadimage');
 const aiRouter = express.Router();
 
-aiRouter.post('/',upload.single('aiimage'),CreateAI);
-aiRouter.put('/:aiid',upload.single('aiiamge'),EditAI);
+aiRouter.post('/',upload.single('image'),CreateAI);
+aiRouter.put('/:aiid',upload.single('image'),EditAI);
 aiRouter.delete('/:aiid',DeleteAI);
 aiRouter.get('/',GetAI);
 
