@@ -43,7 +43,7 @@ const EditAI = async (req, res) => {
             link,
             categoryID
         });
-        if (aiimage) {
+        if (image) {
             updateData.aiimage = image; // Only update image if provided
         }
         await aischema.findByIdAndUpdate(id, editAI, { new: true });
