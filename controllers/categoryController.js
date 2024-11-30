@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const categoryModel = require('../models/category');
 const aimodel = require('../models/ai');
+const models = require('../models/models');
 
 const CreateCategory = async (req, res) => {
     const { name, description } = req.body;
@@ -71,11 +72,19 @@ const GetCategory = async (req, res) => {
         const categories = await Promise.all(category.map(async (category) => {
 
             const toolsCount = await aimodel.countDocuments({ categoryID: category._id });
+            const modelsCount = await models.countDocuments({categoryID : category._id});
+            const datasetCount = await models.countDocuments({categoryID : category._id});
             const AIs = await aimodel.find({ categoryID: category._id })
+            const Models = await models.find({ categoryID: category._id })
+            const DataSets = await models.find({ categoryID: category._id })
 
             return {
                 total_tools: toolsCount,
+                total_models: modelsCount,
+                total_datasets: datasetCount,
                 tools: AIs,
+                models: Models,
+                datasets: DataSets,
                 name: category.name,
                 description: category.description,                
             };

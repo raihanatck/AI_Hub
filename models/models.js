@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const aimodelSchema = new mongoose.Schema({
+const modelsSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
@@ -26,5 +26,5 @@ const aimodelSchema = new mongoose.Schema({
         required: true
     }
 });
-const aischema = mongoose.model("ai_tools", aimodelSchema);
-module.exports = aischema;
+const models = mongoose.model("models",modelsSchema);
+module.exports = models;
