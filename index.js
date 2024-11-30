@@ -5,6 +5,7 @@ const categoryRouter = require('./routes/categoryRouter');
 const aiRouter = require('./routes/aiRouter');
 const modelRouter = require('./routes/modelRouter');
 const datasetRouter = require('./routes/datasetRouter');
+const adminRouter = require('./routes/adminRouter');
 const app = express();
 app.use(cors());
 require('dotenv').config();
@@ -23,6 +24,7 @@ app.use('/category',categoryRouter);
 app.use('/aitools',aiRouter);
 app.use('/models',modelRouter);
 app.use('/datasets',datasetRouter);
+app.use('/admin',adminRouter);
 
 const PORT = process.env.PORT;
 mongoose.connect(
