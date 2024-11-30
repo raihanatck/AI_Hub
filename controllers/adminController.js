@@ -7,7 +7,7 @@ const admin = require('../models/admin');
 const signup = async (req, res) => {
 
     const { email, password } = req.body;
-    const Status = StatusCode();
+    
     try {
 
         emailpattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -30,8 +30,8 @@ const signup = async (req, res) => {
 
         const result = await admin.create({
             email: email,
-            password: password,
-            username: username
+            password: password
+            
         });
 
         // Token generate
@@ -58,7 +58,7 @@ const verifyToken = (token) => {
 
 const signin = async (req, res) => {
     const { email, password } = req.body;
-    const Status = StatusCode();
+    
     try {
         // Check user is existing 
         const existingUser = await admin.findOne({ email: email });
