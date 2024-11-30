@@ -8,3 +8,5 @@ datasetRouter.post('/', upload.single('datasetimage'), createDataset);
 datasetRouter.put('/:datasetid', upload.single('datasetimage'), editDataset);
 datasetRouter.put('/:datasetid', DeleteDataset);
 datasetRouter.get('/', GetDataset);
+
+module.exports = datasetRouter;
