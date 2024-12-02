@@ -74,7 +74,7 @@ const GetAI = async (req, res) => {
     try {
         const pageNumber = parseInt(page);
         const limitNumber = parseInt(limit);
-        
+
         // Find the AIs with pagination
         const AIs = await aischema.find().skip((pageNumber - 1) * limitNumber).limit(limitNumber);
         const totalCount = await aischema.countDocuments();
@@ -90,4 +90,15 @@ const GetAI = async (req, res) => {
     }
 }
 
-module.exports = { CreateAI, EditAI, DeleteAI, GetAI };
+const GetSingleAI = async (req, res) => {
+    const id = req.params.aiid;
+    try {
+        const ai_tool = await aischema.findById({ _id: id });
+        return res.status(200).json({ ai_tool });
+    } catch (error) {
+        console.log("Single get AI error: ", error);
+        return res.status(500).json({ Message: "Internal server error." })
+    }
+}
+
+module.exports = { CreateAI, EditAI, DeleteAI, GetAI, GetSingleAI };

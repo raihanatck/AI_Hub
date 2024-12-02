@@ -90,4 +90,15 @@ const GetDataset = async (req, res) => {
     }
 };
 
-module.exports = { createDataset, editDataset, DeleteDataset, GetDataset };
+const GetSingleDataset = async (req, res) => {
+    const id = req.params.aiid;
+    try {
+        const dataset = await aischema.findById({ _id: id });
+        return res.status(200).json({ dataset });
+    } catch (error) {
+        console.log("Single get AI error: ", error);
+        return res.status(500).json({ Message: "Internal server error." })
+    }
+}
+
+module.exports = { createDataset, editDataset, DeleteDataset, GetDataset, GetSingleDataset };

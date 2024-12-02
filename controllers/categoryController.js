@@ -72,8 +72,8 @@ const GetCategory = async (req, res) => {
         const categories = await Promise.all(category.map(async (category) => {
 
             const toolsCount = await aimodel.countDocuments({ categoryID: category._id });
-            const modelsCount = await models.countDocuments({categoryID : category._id});
-            const datasetCount = await models.countDocuments({categoryID : category._id});
+            const modelsCount = await models.countDocuments({ categoryID: category._id });
+            const datasetCount = await models.countDocuments({ categoryID: category._id });
             const AIs = await aimodel.find({ categoryID: category._id })
             const Models = await models.find({ categoryID: category._id })
             const DataSets = await models.find({ categoryID: category._id })
@@ -87,7 +87,7 @@ const GetCategory = async (req, res) => {
                 datasets: DataSets,
                 id: category.id,
                 name: category.name,
-                description: category.description,                
+                description: category.description,
             };
         }));
         return res.status(200).json({ categories });
@@ -96,4 +96,15 @@ const GetCategory = async (req, res) => {
         return res.status(500).json({ Message: "Internal server error." });
     }
 }
-module.exports = { CreateCategory, EditCategory, DeleteCategory, GetCategory };
+
+const GetSingleCategory = async (req, res) => {
+    const id = req.params.aiid;
+    try {
+        const category = await aischema.findById({ _id: id });
+        return res.status(200).json({ category });
+    } catch (error) {
+        console.log("Single get AI error: ", error);
+        return res.status(500).json({ Message: "Internal server error." })
+    }
+}
+module.exports = { CreateCategory, EditCategory, DeleteCategory, GetCategory, GetSingleCategory };
