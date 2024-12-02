@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const categoryModel = require('../models/category');
 const aimodel = require('../models/ai');
 const models = require('../models/models');
+const datasets = require('../models/datasets');
 
 const CreateCategory = async (req, res) => {
     const { name, description } = req.body;
@@ -73,10 +74,10 @@ const GetCategory = async (req, res) => {
 
             const toolsCount = await aimodel.countDocuments({ categoryID: category._id });
             const modelsCount = await models.countDocuments({ categoryID: category._id });
-            const datasetCount = await models.countDocuments({ categoryID: category._id });
+            const datasetCount = await datasets.countDocuments({ categoryID: category._id });
             const AIs = await aimodel.find({ categoryID: category._id })
             const Models = await models.find({ categoryID: category._id })
-            const DataSets = await models.find({ categoryID: category._id })
+            const DataSets = await datasets.find({ categoryID: category._id })
 
             return {
                 total_tools: toolsCount,
