@@ -98,7 +98,7 @@ const GetCategory = async (req, res) => {
 }
 
 const GetSingleCategory = async (req, res) => {
-    const id = req.params.aiid;
+    const id = req.params.categoryid;
     try {
         const category = await aischema.findById({ _id: id });
         return res.status(200).json({ category });
