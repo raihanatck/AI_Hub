@@ -93,7 +93,7 @@ const GetModel = async (req, res) => {
 const GetSingleModel = async (req, res) => {
     const id = req.params.aiid;
     try {
-        const model = await models.findById({ _id: id });
+        const model = await models.findById({ _id: id }).populate({ path: 'categoryID', select: 'name' });
         return res.status(200).json({ model });
     } catch (error) {
         console.log("Single get models error: ", error);

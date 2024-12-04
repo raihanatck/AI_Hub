@@ -93,7 +93,7 @@ const GetAI = async (req, res) => {
 const GetSingleAI = async (req, res) => {
     const id = req.params.aiid;
     try {
-        const ai_tool = await aischema.findById({ _id: id });
+        const ai_tool = await aischema.findById({ _id: id }).populate({ path: 'categoryID', select: 'name' });
         return res.status(200).json({ ai_tool });
     } catch (error) {
         console.log("Single get AI error: ", error);
