@@ -101,7 +101,7 @@ const GetCategory = async (req, res) => {
 const GetSingleCategory = async (req, res) => {
     const id = req.params.categoryid;
     try {
-        const category = await aischema.findById({ _id: id });
+        const category = await categoryModel.findById({ _id: id });
         return res.status(200).json({ category });
     } catch (error) {
         console.log("Single get AI error: ", error);

@@ -93,7 +93,7 @@ const GetDataset = async (req, res) => {
 const GetSingleDataset = async (req, res) => {
     const id = req.params.aiid;
     try {
-        const dataset = await aischema.findById({ _id: id });
+        const dataset = await datasets.findById({ _id: id });
         return res.status(200).json({ dataset });
     } catch (error) {
         console.log("Single get AI error: ", error);
