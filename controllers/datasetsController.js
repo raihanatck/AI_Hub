@@ -96,7 +96,7 @@ const GetSingleDataset = async (req, res) => {
         const dataset = await datasets.findById({ _id: id });
         return res.status(200).json({ dataset });
     } catch (error) {
-        console.log("Single get AI error: ", error);
+        console.log("Single get datasets error: ", error);
         return res.status(500).json({ Message: "Internal server error." })
     }
 }

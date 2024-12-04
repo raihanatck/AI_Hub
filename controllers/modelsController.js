@@ -96,7 +96,7 @@ const GetSingleModel = async (req, res) => {
         const model = await models.findById({ _id: id });
         return res.status(200).json({ model });
     } catch (error) {
-        console.log("Single get AI error: ", error);
+        console.log("Single get models error: ", error);
         return res.status(500).json({ Message: "Internal server error." })
     }
 }

@@ -104,7 +104,7 @@ const GetSingleCategory = async (req, res) => {
         const category = await categoryModel.findById({ _id: id });
         return res.status(200).json({ category });
     } catch (error) {
-        console.log("Single get AI error: ", error);
+        console.log("Single get category error: ", error);
         return res.status(500).json({ Message: "Internal server error." })
     }
 }
