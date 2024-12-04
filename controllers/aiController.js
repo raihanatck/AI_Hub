@@ -35,23 +35,23 @@ const EditAI = async (req, res) => {
         if (existingAI) {
             return res.status(400).json({ Message: "This AI name aleardy exist." });
         }
-        const editAI = await aischema({
+        const editAI = {
             image,
             name,
             description,
             tags,
             link,
             categoryID
-        });
+        };
         if (image) {
-            updateData.aiimage = image; // Only update image if provided
+            editAI.image = image; // Only update image if provided
         }
         await aischema.findByIdAndUpdate(id, editAI, { new: true });
         return res.status(200).json({ UpdatedAI: editAI, Message: "Category updated successfully." });
 
     } catch (error) {
         console.log("Edit AI error: ", error);
-        return res.status(500).json({ Message: "Internal server error." });
+        return res.status(500).json({ Message: error.message });
     }
 };
 

@@ -35,16 +35,16 @@ const editDataset = async (req, res) => {
         if (existingDataset) {
             return res.status(400).json({ Message: "This Dataset name aleardy exist." });
         }
-        const editdatasets = await datasets({
+        const editdatasets = {
             image,
             name,
             description,
             tags,
             link,
             categoryID
-        });
+        };
         if (image) {
-            updateData.datasetimage = image; // Only update image if provided
+            editdatasets.image = image; // Only update image if provided
         }
         await datasets.findByIdAndUpdate(id, editdatasets, { new: true });
         return res.status(200).json({ Updated_datasets: editdatasets, Message: "Dataset updated successfully." });

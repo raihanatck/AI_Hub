@@ -35,16 +35,16 @@ const editModel = async (req, res) => {
         if (existingModel) {
             return res.status(400).json({ Message: "This model name aleardy exist." });
         }
-        const editmodel = await models({
+        const editmodel = {
             image,
             name,
             description,
             tags,
             link,
             categoryID
-        });
+        };
         if (image) {
-            updateData.modelimage = image; // Only update image if provided
+            editmodel.image = image; // Only update image if provided
         }
         await models.findByIdAndUpdate(id, editmodel, { new: true });
         return res.status(200).json({ UpdatedModel: editmodel, Message: "Model updated successfully." });
