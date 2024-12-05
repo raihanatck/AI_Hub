@@ -56,7 +56,7 @@ const editDataset = async (req, res) => {
 };
 
 const DeleteDataset = async (req, res) => {
-    const id = req.params.aiid;
+    const id = req.params.datasetid;
     try {
         const deletedatasets = await datasets.findByIdAndDelete(id);
         if (!deletedatasets) {
@@ -91,7 +91,7 @@ const GetDataset = async (req, res) => {
 };
 
 const GetSingleDataset = async (req, res) => {
-    const id = req.params.aiid;
+    const id = req.params.datasetid;
     try {
         const dataset = await datasets.findById({ _id: id }).populate({ path: 'categoryID', select: 'name' });
         return res.status(200).json({ dataset });

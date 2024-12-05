@@ -56,7 +56,7 @@ const editModel = async (req, res) => {
 };
 
 const DeleteModel = async (req, res) => {
-    const id = req.params.aiid;
+    const id = req.params.modelid;
     try {
         const deleteModel = await models.findByIdAndDelete(id);
         if (!deleteModel) {
@@ -91,7 +91,7 @@ const GetModel = async (req, res) => {
 };
 
 const GetSingleModel = async (req, res) => {
-    const id = req.params.aiid;
+    const id = req.params.modelid;
     try {
         const model = await models.findById({ _id: id }).populate({ path: 'categoryID', select: 'name' });
         return res.status(200).json({ model });
