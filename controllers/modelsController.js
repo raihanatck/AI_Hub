@@ -76,10 +76,10 @@ const GetModel = async (req, res) => {
         const limitNumber = parseInt(limit);
 
         // Find the AIs with pagination
-        const models = await models.find().skip((pageNumber - 1) * limitNumber).limit(limitNumber);
+        const model = await models.find().skip((pageNumber - 1) * limitNumber).limit(limitNumber);
         const totalCount = await models.countDocuments();
         res.status(200).json({
-            models, totalCount, // Total count of all AI models
+            model, totalCount, // Total count of all AI models
             totalPages: Math.ceil(totalCount / limitNumber),  // Calculate total pages
             currentPage: pageNumber,  // Current page
             perPage: limitNumber,     // Items per page
