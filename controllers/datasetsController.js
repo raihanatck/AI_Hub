@@ -78,11 +78,15 @@ const GetDataset = async (req, res) => {
         // Find the AIs with pagination
         const dataset = await datasets.find().skip((pageNumber - 1) * limitNumber).limit(limitNumber);
         const totalCount = await datasets.countDocuments();
-        res.status(200).json({
-            dataset, totalCount, // Total count of all AI datasets
+        const meta = {
+            totalCount, // Total count of all AI datasets
             totalPages: Math.ceil(totalCount / limitNumber),  // Calculate total pages
             currentPage: pageNumber,  // Current page
             perPage: limitNumber,     // Items per page
+        }
+        res.status(200).json({
+            dataset,
+            meta
         });
     } catch (error) {
         console.log("Get dataset error: ", error);

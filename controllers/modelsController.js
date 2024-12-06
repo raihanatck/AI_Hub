@@ -78,11 +78,15 @@ const GetModel = async (req, res) => {
         // Find the AIs with pagination
         const model = await models.find().skip((pageNumber - 1) * limitNumber).limit(limitNumber);
         const totalCount = await models.countDocuments();
-        res.status(200).json({
-            model, totalCount, // Total count of all AI models
+        const meta = {
+            totalCount, // Total count of all AI datasets
             totalPages: Math.ceil(totalCount / limitNumber),  // Calculate total pages
             currentPage: pageNumber,  // Current page
             perPage: limitNumber,     // Items per page
+        }
+        res.status(200).json({
+            model,
+            meta
         });
     } catch (error) {
         console.log("Get model error: ", error);

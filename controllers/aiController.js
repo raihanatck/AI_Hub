@@ -78,11 +78,15 @@ const GetAI = async (req, res) => {
         // Find the AIs with pagination
         const AIs = await aischema.find().skip((pageNumber - 1) * limitNumber).limit(limitNumber);
         const totalCount = await aischema.countDocuments();
-        res.status(200).json({
-            AIs, totalCount, // Total count of all AI models
+        const meta = {
+            totalCount, // Total count of all AI datasets
             totalPages: Math.ceil(totalCount / limitNumber),  // Calculate total pages
             currentPage: pageNumber,  // Current page
             perPage: limitNumber,     // Items per page
+        }
+        res.status(200).json({
+            AIs,
+            meta
         });
     } catch (error) {
         console.log("Get AI error: ", error);
