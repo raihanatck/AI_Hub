@@ -7,7 +7,7 @@ const datasetRouter = express.Router();
 
 datasetRouter.post('/',auth, upload.single('image'), createDataset);
 datasetRouter.put('/:datasetid',auth, upload.single('image'), editDataset);
-datasetRouter.put('/:datasetid',auth, DeleteDataset);
+datasetRouter.delete('/:datasetid',auth, DeleteDataset);
 datasetRouter.get('/', GetDataset);
 datasetRouter.get('/:datasetid', GetSingleDataset);
 
